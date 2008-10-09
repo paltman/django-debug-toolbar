@@ -57,8 +57,14 @@
     border-right: 1px solid #487858;
 }
 
-#djDebugToolbar #djDebugButton {
+#djDebugToolbar #djDebugButton,
+#djDebugToolbar #djDebugHide {
     color: #92ef3f;
+}
+
+#djDebugToolbar #djDebugHide {
+    font-size: 80%;
+    cursor: pointer;
 }
 
 #djDebug pre {

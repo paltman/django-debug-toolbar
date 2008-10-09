@@ -35,6 +35,10 @@ jQuery(function($) {
 			$('#djDebugTemplatePanel a.djTemplateShowContext').click(function() {
 				$.djDebug.toggle_content($(this).parent().next());
 			});
+                        $("#djDebugHide").click(function(){
+                                $("#djDebug").hide();
+                        });
+
 		},
 		open: function() {
 			$(document).bind('keydown.djDebug', function(e) {
