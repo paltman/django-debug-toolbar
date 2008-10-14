@@ -43,7 +43,8 @@ class HeaderDebugPanel(DebugPanel):
         )
 
     def content(self):
-        context = {
-            'headers': self.headers
-        }
+        context = self.to_data()
         return render_to_string('debug_toolbar/panels/headers.html', context)
+    
+    def to_data(self):
+        return { 'headers': self.headers }

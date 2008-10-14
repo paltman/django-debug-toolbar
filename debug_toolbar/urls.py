@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^__debug__/sql_explain/$', 'debug_toolbar.views.sql_explain', name='sql_explain'),
     url(r'^__debug__/sql_profile/$', 'debug_toolbar.views.sql_profile', name='sql_profile'),
     url(r'^__debug__/template_source/$', 'debug_toolbar.views.template_source', name='template_source'),
+    url(r'^__debug__/logs/(?P<uid>[a-f0-9-]+)/$', 'debug_toolbar.views.report', name="report")
 )

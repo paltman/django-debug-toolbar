@@ -58,15 +58,18 @@ class SQLDebugPanel(DebugPanel):
         return ''
 
     def content(self):
+        context = self.to_data()
+        return render_to_string('debug_toolbar/panels/sql.html', context)
+    
+    def to_data(self):
         sql_queries = connection.queries[self._offset:]
         for query in sql_queries:
             query['sql'] = reformat_sql(query['sql'])
 
-        context = {
+        return {
             'queries': sql_queries,
             'sql_time': self._sql_time,
         }
-        return render_to_string('debug_toolbar/panels/sql.html', context)
 
 def reformat_sql(sql):
     sql = sql.replace('`,`', '`, `')

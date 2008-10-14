@@ -68,6 +68,14 @@ Installation
    panels you want to display.  And you can include panels that you have created
    or that are specific to your project.
 
+#. Optional: Add a dictionary called `DEBUG_TOOLBAR_CONFIG` with the following 
+   keys to control the behavior of the middleware::
+
+    INTERCEPT_REDIRECTS  # Setting to True will intercept redirects. (True)
+    LOG_OUTPUT_PATH      # The path on the server to write logs to. (/tmp)
+    LOGGING_ENABLED      # Enable logging. (True)
+    TOOLBAR_ENABLED      # Enable the toolbar. (True)
+
 TODO
 ====
 - Panel idea: AJAX call to show cprofile data similar to the ?prof idea

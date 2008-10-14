@@ -12,14 +12,28 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.utils.hashcompat import sha_constructor
+from debug_toolbar.toolbar.loader import DebugToolbarConfiguration
+
+config = DebugToolbarConfiguration()
 
 def debug_media(request, path):
-    root = getattr(settings, 'DEBUG_TOOLBAR_MEDIA_ROOT', None)
+    root = config.media_root
     if root is None:
         parent = os.path.abspath(os.path.dirname(__file__))
         root = os.path.join(parent, 'media')
     return django.views.static.serve(request, path, root)
 
+def report(request, uid):
+    output_path = config.log_output_path
+    return render_to_response('debug_toolbar/report.html', {
+        'data':simplejson.loads(
+            open(
+                os.path.join(output_path, uid + '.json'), 
+                'r'
+            ).read()
+        )
+    })
+        
 def sql_select(request):
     """
     Returns the output of the SQL SELECT statement.

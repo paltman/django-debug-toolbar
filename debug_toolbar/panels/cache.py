@@ -24,6 +24,18 @@ class CacheStatTracker(BaseCache):
         self.get_many = 0
         self.deletes = 0
         self.total_time = 0
+    
+    def to_data(self):
+        return {
+            'calls':self.calls,
+            'hits':self.hits,
+            'misses':self.misses,
+            'sets':self.sets,
+            'gets':self.gets,
+            'get_many':self.get_many,
+            'deletes':self.deletes,
+            'total_time':self.total_time
+        }
 
     def _get_func_info(self):
         stack = inspect.stack()[2]
@@ -100,3 +112,6 @@ class CacheDebugPanel(DebugPanel):
             cache = self.cache,
         )
         return render_to_string('debug_toolbar/panels/cache.html', context)
+    
+    def to_data(self):
+        return self.cache.to_data()
