@@ -79,7 +79,7 @@ class DebugToolbarMiddleware(object):
         if response['Content-Type'].split(';')[0] in _HTML_TYPES:
             if self.debug_toolbar.config.logging_enabled:
                 uid = self.debug_toolbar.serialize()
-                response.set_cookie('debug_toolbar_detail_url', value='http://%s:%s/__debug__/logs/%s/' % (request.META['SERVER_NAME'], uid))
+                response.set_cookie('debug_toolbar_detail_url', value='http://%s:%s/__debug__/logs/%s/' % (request.META['SERVER_NAME'], request.META['SERVER_PORT'], uid))
             if self.debug_toolbar.config.toolbar_enabled:
                 response.content = replace_insensitive(smart_unicode(response.content), u'</body>', smart_unicode(self.debug_toolbar.render_toolbar() + u'</body>'))
         return response
