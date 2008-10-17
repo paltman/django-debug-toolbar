@@ -58,6 +58,10 @@ class LoggingPanel(DebugPanel):
         return ''
 
     def content(self):
+        records = self.to_data()
+        return render_to_string('debug_toolbar/panels/logger.html', {'records': records})
+
+    def to_data(self):
         records = []
         for record in self.get_and_delete():
             records.append({
@@ -67,4 +71,4 @@ class LoggingPanel(DebugPanel):
                 'file': record.pathname,
                 'line': record.lineno,
             })
-        return render_to_string('debug_toolbar/panels/logger.html', {'records': records})
+        return records

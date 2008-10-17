@@ -39,7 +39,7 @@ class DebugToolbarMiddleware(object):
             return False
         if request.is_ajax():
             return False
-        if not request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS:
+        if settings.INTERNAL_IPS and request.META.get('REMOTE_ADDR') not in settings.INTERNAL_IPS:
             return False
         return True
 
@@ -64,7 +64,7 @@ class DebugToolbarMiddleware(object):
     def process_response(self, request, response):
         if not self.debug_toolbar:
             return response
-        if self.debug_toolbar.config['INTERCEPT_REDIRECTS']:
+        if self.debug_toolbar.config.intercept_redirects:
             if isinstance(response, HttpResponseRedirect):
                 redirect_to = response.get('Location', None)
                 if redirect_to:
@@ -77,5 +77,9 @@ class DebugToolbarMiddleware(object):
         for panel in self.debug_toolbar.panels:
             panel.process_response(request, response)
         if response['Content-Type'].split(';')[0] in _HTML_TYPES:
-            response.content = replace_insensitive(smart_unicode(response.content), u'</body>', smart_unicode(self.debug_toolbar.render_toolbar() + u'</body>'))
+            if self.debug_toolbar.config.logging_enabled:
+                uid = self.debug_toolbar.serialize()
+                response.set_cookie('debug_toolbar_detail_url', value='http://%s:%s/__debug__/logs/%s/' % (request.META['SERVER_NAME'], request.META['SERVER_PORT'], uid))
+            if self.debug_toolbar.config.toolbar_enabled:
+                response.content = replace_insensitive(smart_unicode(response.content), u'</body>', smart_unicode(self.debug_toolbar.render_toolbar() + u'</body>'))
         return response

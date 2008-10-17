@@ -15,3 +15,6 @@ class VersionDebugPanel(DebugPanel):
 
     def content(self):
         return ''
+        
+    def to_data(self):
+        return ''

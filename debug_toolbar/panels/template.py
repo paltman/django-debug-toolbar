@@ -53,6 +53,10 @@ class TemplateDebugPanel(DebugPanel):
         )
 
     def content(self):
+        context = self.to_data()
+        return render_to_string('debug_toolbar/panels/templates.html', context)
+
+    def to_data(self):
         template_context = []
         for i, d in enumerate(self.templates):
             info = {}
@@ -70,9 +74,10 @@ class TemplateDebugPanel(DebugPanel):
             c = d.get('context', None)
             info['context'] = '\n'.join([pformat(_d) for _d in c.dicts])
             template_context.append(info)
-        context = {
+        return {
             'templates': template_context,
             'template_dirs': [normpath(x) for x in settings.TEMPLATE_DIRS],
             'context_processors': self.context_processors,
         }
-        return render_to_string('debug_toolbar/panels/templates.html', context)
+
+        

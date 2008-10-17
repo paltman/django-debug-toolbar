@@ -22,6 +22,9 @@ class DebugPanel(object):
 
     def content(self):
         raise NotImplementedError
+    
+    def to_data(self):
+        raise NotImplementedError
 
     # Standard middleware methods
     def process_request(self, request):

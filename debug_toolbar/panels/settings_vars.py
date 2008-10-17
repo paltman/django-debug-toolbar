@@ -17,7 +17,8 @@ class SettingsVarsDebugPanel(DebugPanel):
         return ''
 
     def content(self):
-        context = {
-            'settings': get_safe_settings(),
-        }
+        context = self.to_data()
         return render_to_string('debug_toolbar/panels/settings_vars.html', context)
+
+    def to_data(self):
+        return { 'settings': get_safe_settings() }
