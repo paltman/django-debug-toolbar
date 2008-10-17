@@ -71,12 +71,12 @@ class DebugToolbarConfiguration(object):
     @property
     def logging_enabled(self):
         return self.config['LOGGING_ENABLED']
-    
+
     @property
     def toolbar_enabled(self):
         return self.config['TOOLBAR_ENABLED']
-                       
-            
+
+
 class DebugToolbar(object):
 
     def __init__(self, request):
@@ -84,7 +84,7 @@ class DebugToolbar(object):
         self.panels = []
         self.config = DebugToolbarConfiguration()
         self.load_panels()
-        
+
     def load_panels(self):
         """
         Populate debug panels
@@ -134,11 +134,11 @@ class DebugToolbar(object):
         if self.config.logging_enabled:
             data = {}
             for panel in self.panels:
-                data[panel.name] = {'data':panel.to_data(), 'title':panel.title()}
+                data[panel.name] = {'data':panel.data, 'title':panel.title()}
             json = simplejson.dumps(data, indent=4, sort_keys=True, cls=DateTimeJSONEncoder)
             uid = str(uuid4())
             fp = open(os.path.join(self.config.log_output_path, '%s.json' % uid), 'w')
             fp.write(json)
             fp.close()
         return uid
-        
+

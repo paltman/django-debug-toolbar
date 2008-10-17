@@ -53,10 +53,10 @@ class TemplateDebugPanel(DebugPanel):
         )
 
     def content(self):
-        context = self.to_data()
+        context = self.data
         return render_to_string('debug_toolbar/panels/templates.html', context)
 
-    def to_data(self):
+    def _to_data(self):
         template_context = []
         for i, d in enumerate(self.templates):
             info = {}

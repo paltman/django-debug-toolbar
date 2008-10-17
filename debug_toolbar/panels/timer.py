@@ -21,6 +21,6 @@ class TimerDebugPanel(DebugPanel):
 
     def content(self):
         return ''
-    
-    def to_data(self):
+
+    def _to_data(self):
         return ''

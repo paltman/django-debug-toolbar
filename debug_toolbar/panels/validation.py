@@ -39,6 +39,6 @@ class ValidationPanel(DebugPanel):
         import tidy
         self.tidydoc = tidy.parseString(response.content)
 
-    def to_data(self):
+    def _to_data(self):
         return {"errors": self.errors,
                 "warnings": self.warnings}

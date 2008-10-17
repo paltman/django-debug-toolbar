@@ -24,7 +24,7 @@ class CacheStatTracker(BaseCache):
         self.get_many = 0
         self.deletes = 0
         self.total_time = 0
-    
+
     def to_data(self):
         return {
             'calls':self.calls,
@@ -112,6 +112,6 @@ class CacheDebugPanel(DebugPanel):
             cache = self.cache,
         )
         return render_to_string('debug_toolbar/panels/cache.html', context)
-    
-    def to_data(self):
+
+    def _to_data(self):
         return self.cache.to_data()

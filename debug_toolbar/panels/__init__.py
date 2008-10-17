@@ -22,9 +22,17 @@ class DebugPanel(object):
 
     def content(self):
         raise NotImplementedError
-    
-    def to_data(self):
+
+    def _to_data(self):
         raise NotImplementedError
+
+    @property
+    def data(self):
+        """Use this property instead of self._to_data() to avoid
+        double-escaping of processed data - eg, Pygmentizing twice."""
+        if not hasattr(self, "_data"):
+            self._data = self._to_data()
+        return self._data
 
     # Standard middleware methods
     def process_request(self, request):

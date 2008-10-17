@@ -20,8 +20,8 @@ class RequestVarsDebugPanel(DebugPanel):
     def content(self):
         context = self.to_data()
         return render_to_string('debug_toolbar/panels/request_vars.html', context)
-    
-    def to_data(self):
+
+    def _to_data(self):
         return {
             'get': [(k, self.request.GET.getlist(k)) for k in self.request.GET.iterkeys()],
             'post': [(k, self.request.POST.getlist(k)) for k in self.request.POST.iterkeys()],

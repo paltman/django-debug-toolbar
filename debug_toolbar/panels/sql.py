@@ -59,10 +59,10 @@ class SQLDebugPanel(DebugPanel):
         return ''
 
     def content(self):
-        context = self.to_data()
+        context = self.data
         return render_to_string('debug_toolbar/panels/sql.html', context)
-    
-    def to_data(self):
+
+    def _to_data(self):
         sql_queries = connection.queries[self._offset:]
         for query in sql_queries:
             query['sql'] = reformat_sql(query['sql'])
